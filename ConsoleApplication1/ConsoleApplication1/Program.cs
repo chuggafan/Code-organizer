@@ -27,46 +27,44 @@ namespace ConsoleApplication1
             string s = ss;
             long count = formatfileread.Position;
             long wut = ss.Length % formatfileread.Length;
-            long columns = ss.Length;
             int readByte;
+            long extra = 0;
             long count2 = 0;
             long positionofSS;
             while (true)
             {
-                columns = ss.Length;
                 count = formatfileread.Position;
                 readByte = formatfileread.ReadByte();
                 positionofSS = count + count2;
                 if (readByte == (byte)'\n')
                 {
-                    if (count + count2 >= columns)
+                    if (count + count2 >= ss.Length)
                     {
-                        positionofSS = ss.Length - 1;
+                        positionofSS = ss.Length;
                         goto writeMore;
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)'\n')
                     {
                         ss = ss.Insert((int)(positionofSS), "\n");
-                        positionofSS++;
                     }
                 }
                 if (readByte == (byte)' ')
                 {
-                    if (count + count2 >= columns)
+                    if (count + count2 >= ss.Length)
                     {
-                        positionofSS = ss.Length - 1;
+                        positionofSS = ss.Length;
                         goto writeMore;
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)' ')
                     {
                         ss = ss.Insert((int)positionofSS, @" ");
-                        positionofSS++;
                     }
                 }
                 Console.WriteLine(formatfileread.Position + ": % done is: {0}", 100*((double)positionofSS / ss.Length));
                 if (formatfileread.Position == formatfileread.Length)
                 {
                     ss = ss.Insert((int)positionofSS, "\n");
+                    extra++;
                     formatfileread.Position = 0;
                     wut = ss.Length % formatfileread.Length;
                     if (wut == 0 && formatfileread.Length == ss.Length)
@@ -78,7 +76,8 @@ namespace ConsoleApplication1
             }
             #region afterdone
             writeMore:
-            positionofSS = ss.Length - 1;
+            positionofSS = ss.Length;
+            formatfileread.Position = (ss.Length % formatfileread.Length) + extra;
             while (formatfileread.Position != formatfileread.Length)
             {
                 readByte = formatfileread.ReadByte();
@@ -125,46 +124,44 @@ namespace ConsoleApplication1
             string s = ss;
             long count = formatfileread.Position;
             long wut = ss.Length % formatfileread.Length;
-            long columns = ss.Length;
             int readByte;
+            long extra = 0;
             long count2 = 0;
             long positionofSS;
             while (true)
             {
-                columns = ss.Length;
                 count = formatfileread.Position;
                 readByte = formatfileread.ReadByte();
                 positionofSS = count + count2;
                 if (readByte == (byte)'\n')
                 {
-                    if (count + count2 >= columns)
+                    if (count + count2 >= ss.Length)
                     {
-                        positionofSS = ss.Length - 1;
+                        positionofSS = ss.Length;
                         goto writeMore;
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)'\n')
                     {
                         ss = ss.Insert((int)(positionofSS), "\n");
-                        positionofSS++;
                     }
                 }
                 if (readByte == (byte)' ')
                 {
-                    if (count + count2 >= columns)
+                    if (count + count2 >= ss.Length)
                     {
-                        positionofSS = ss.Length - 1;
+                        positionofSS = ss.Length;
                         goto writeMore;
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)' ')
                     {
                         ss = ss.Insert((int)positionofSS, @" ");
-                        positionofSS++;
                     }
                 }
                 Console.WriteLine(formatfileread.Position + ": % done is: {0}",100*((double)positionofSS / ss.Length));
                 if (formatfileread.Position == formatfileread.Length)
                 {
                     ss = ss.Insert((int)positionofSS, "\n");
+                    extra++;
                     formatfileread.Position = 0;
                     wut = ss.Length % formatfileread.Length;
                     if (wut == 0 && formatfileread.Length == ss.Length)
@@ -176,7 +173,8 @@ namespace ConsoleApplication1
             }
             #region afterdone
             writeMore:
-            positionofSS = ss.Length - 1;
+            positionofSS = ss.Length;
+            formatfileread.Position = (ss.Length % formatfileread.Length) + extra;
             while (formatfileread.Position != formatfileread.Length)
             {
                 readByte = formatfileread.ReadByte();
