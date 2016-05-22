@@ -6,6 +6,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Path to the format");
             string path = Console.ReadLine();
             if (!File.Exists(path))
             {
@@ -13,6 +14,7 @@ namespace ConsoleApplication1
                 Console.ReadKey();
                 goto exit;
             }
+            Console.WriteLine("Path to code");
             string path2 = Console.ReadLine();
             if (!File.Exists(path2))
             {
