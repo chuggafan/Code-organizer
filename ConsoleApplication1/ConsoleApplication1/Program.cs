@@ -46,7 +46,8 @@ namespace ConsoleApplication1
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)'\n')
                     {
-                        ss = ss.Insert((int)(positionofSS++), "\n");
+                        ss = ss.Insert((int)(positionofSS), "\n");
+                        positionofSS++;
                     }
                 }
                 if (readByte == (byte)' ')
@@ -58,13 +59,14 @@ namespace ConsoleApplication1
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)' ')
                     {
-                        ss = ss.Insert((int)positionofSS++, @" ");
+                        ss = ss.Insert((int)positionofSS, @" ");
+                        positionofSS++;
                     }
                 }
-                Console.WriteLine(formatfileread.Position + ": % done is: {0}", (double)positionofSS / ss.Length);
-                if (formatfileread.Position == formatfileread.Length - 1)
+                Console.WriteLine(formatfileread.Position + ": % done is: {0}", 100*((double)positionofSS / ss.Length));
+                if (formatfileread.Position == formatfileread.Length)
                 {
-                    ss = ss.Insert((int)positionofSS++, "\n");
+                    ss = ss.Insert((int)positionofSS, "\n");
                     formatfileread.Position = 0;
                     wut = ss.Length % formatfileread.Length;
                     if (wut == 0 && formatfileread.Length == ss.Length)
@@ -76,8 +78,8 @@ namespace ConsoleApplication1
             }
             #region afterdone
             writeMore:
-            formatfileread.Position = count;
-            while (formatfileread.Position + 1 != formatfileread.Length)
+            positionofSS = ss.Length - 1;
+            while (formatfileread.Position != formatfileread.Length)
             {
                 readByte = formatfileread.ReadByte();
                 if (readByte == (byte)'\n')
@@ -94,11 +96,12 @@ namespace ConsoleApplication1
                 }
             }
             ;
-            ss += '\n';
             formatfileread.Dispose();
+            ss += File.ReadAllText(path);
+            ss += '\n';
             File.WriteAllText(path2, ss);
             Console.WriteLine("Would you like to append another file aswell? (y/n)");
-            if(Console.ReadLine() == "\b[yY]\b")
+            if(Console.ReadLine() == "y")
             {
                 Console.WriteLine("Type file to append");
                 string sss = Console.ReadLine();
@@ -141,7 +144,8 @@ namespace ConsoleApplication1
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)'\n')
                     {
-                        ss = ss.Insert((int)(positionofSS++), "\n");
+                        ss = ss.Insert((int)(positionofSS), "\n");
+                        positionofSS++;
                     }
                 }
                 if (readByte == (byte)' ')
@@ -153,13 +157,14 @@ namespace ConsoleApplication1
                     }
                     if (ss.ToCharArray()[positionofSS] != (byte)' ')
                     {
-                        ss = ss.Insert((int)positionofSS++, @" ");
+                        ss = ss.Insert((int)positionofSS, @" ");
+                        positionofSS++;
                     }
                 }
-                Console.WriteLine(formatfileread.Position + ": % done is: {0}", (double)positionofSS / ss.Length);
-                if (formatfileread.Position == formatfileread.Length - 1)
+                Console.WriteLine(formatfileread.Position + ": % done is: {0}",100*((double)positionofSS / ss.Length));
+                if (formatfileread.Position == formatfileread.Length)
                 {
-                    ss = ss.Insert((int)positionofSS++, "\n");
+                    ss = ss.Insert((int)positionofSS, "\n");
                     formatfileread.Position = 0;
                     wut = ss.Length % formatfileread.Length;
                     if (wut == 0 && formatfileread.Length == ss.Length)
@@ -171,8 +176,8 @@ namespace ConsoleApplication1
             }
             #region afterdone
             writeMore:
-            formatfileread.Position = count;
-            while (formatfileread.Position + 1 != formatfileread.Length)
+            positionofSS = ss.Length - 1;
+            while (formatfileread.Position != formatfileread.Length)
             {
                 readByte = formatfileread.ReadByte();
                 if (readByte == (byte)'\n')
@@ -189,10 +194,10 @@ namespace ConsoleApplication1
                 }
             }
             ;
-            ss += '\n';
             formatfileread.Dispose();
+            ss += File.ReadAllText(path) + '\n';
             Console.WriteLine("Would you like to append another file aswell? (y/n)");
-            if (Console.ReadLine() == "\b[yY]\b")
+            if (Console.ReadLine() == "y")
             {
                 Console.WriteLine("Type file to append");
                 string sss = Console.ReadLine();
